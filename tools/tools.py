@@ -37,8 +37,6 @@ STRUCTURAL_TAGS = {"h1", "h2", "h3", "h4", "h5", "h6", "p", "li", "blockquote"}
 def web_search(query: str):
     """
     Search web page for recent and reliable information on the given query.
-    :param query:
-    :return:
     """
     tavily_search = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
     response = tavily_search.search(query, max_results=5)
@@ -205,6 +203,7 @@ def _clean_element_text(element: Tag) -> str:
 
 @tool
 def scrape_url(url):
+    """Scrape the given url and provide a clean content"""
     # Initialize connection pooling
     with create_robust_session(retries=3, backoff_factor=2.0) as production_session:
         raw_html = fetch_url_html(url, session=production_session)
