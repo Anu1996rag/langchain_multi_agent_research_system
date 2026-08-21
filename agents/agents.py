@@ -1,7 +1,6 @@
 
-import os
 from dotenv import load_dotenv
-from langchain_groq import ChatGroq
+from langchain_ollama import ChatOllama
 from langchain.agents import create_agent
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -10,12 +9,10 @@ from tools.tools import web_search, scrape_url
 
 load_dotenv()
 
-llm = ChatGroq(
-        model="openai/gpt-oss-120b",
-        api_key=os.getenv("GROQ_API_KEY"),
-        max_tokens=1000,
-        temperature=0
-    )
+llm = ChatOllama(
+    model="llama3.2:1b",
+    temperature=0
+)
 
 
 def search_agent():
@@ -48,7 +45,7 @@ clear, and insightful narrative that uncovers meaningful trends and strategic ta
 
 [INPUT DATA]
 - Topic: {topic}
-- Gathered Research / Key Facts: {research_data}
+- Gathered Research / Key Facts: {research}
 
 [REPORT STRUCTURE]
 Please organize the detailed report using the following markdown structure:
@@ -99,7 +96,7 @@ Please organize your critical evaluation using the following markdown structure:
 3. Counter-Arguments & Blind Spots: Detail what alternative perspectives or edge cases the report failed to consider.
 4. Language & Tone Audit: Point out any instances of subjective phrasing or speculative filler language.
 5. Actionable Refinement List: Provide a bulleted checklist of exact revisions needed to make this report bulletproof.
-6. Overall Score (out of 10)
+6. Overall Score (out of 10) - No explanation just the score should be showed.
 7. Areas to Improve
 
 [CONSTRAINTS & QUALITY STANDARDS]
